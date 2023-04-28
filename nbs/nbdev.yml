@@ -4,6 +4,6 @@ project:
 website:
   title: "dreamai_pdf"
   site-url: "https://HamzaFarhan.github.io/dreamai_pdf"
-  description: "Library based on DreamAI for parsing PDFs"
+  description: "Library based on dreamai for parsing PDFs"
   repo-branch: main
   repo-url: "https://github.com/HamzaFarhan/dreamai_pdf"
