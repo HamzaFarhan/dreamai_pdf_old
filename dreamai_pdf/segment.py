@@ -4,9 +4,10 @@
 __all__ = ['text_to_segments', 'segment_to_ners', 'ners_to_dicts', 'get_edu_dicts', 'get_job_dicts', 'get_contact_dict']
 
 # %% ../nbs/02_segment.ipynb 3
-from .parse import *
 from .core import *
+from .parse import *
 from .imports import *
+
 
 # %% ../nbs/02_segment.ipynb 4
 def text_to_segments(text, labeling_model, tags=['education', 'work experience']):
