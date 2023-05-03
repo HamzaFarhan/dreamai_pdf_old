@@ -43,6 +43,8 @@ d = { 'settings': { 'branch': 'main',
             'dreamai_pdf.segment': { 'dreamai_pdf.segment.get_contact_dict': ('segment.html#get_contact_dict', 'dreamai_pdf/segment.py'),
                                      'dreamai_pdf.segment.get_edu_dicts': ('segment.html#get_edu_dicts', 'dreamai_pdf/segment.py'),
                                      'dreamai_pdf.segment.get_job_dicts': ('segment.html#get_job_dicts', 'dreamai_pdf/segment.py'),
+                                     'dreamai_pdf.segment.load_ner_model': ('segment.html#load_ner_model', 'dreamai_pdf/segment.py'),
+                                     'dreamai_pdf.segment.load_segs_model': ('segment.html#load_segs_model', 'dreamai_pdf/segment.py'),
                                      'dreamai_pdf.segment.ners_to_dicts': ('segment.html#ners_to_dicts', 'dreamai_pdf/segment.py'),
                                      'dreamai_pdf.segment.segment_to_ners': ('segment.html#segment_to_ners', 'dreamai_pdf/segment.py'),
                                      'dreamai_pdf.segment.text_to_segments': ('segment.html#text_to_segments', 'dreamai_pdf/segment.py')}}}
