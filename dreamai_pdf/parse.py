@@ -33,14 +33,14 @@ def get_n_cols(data, min_c=2, max_c=10, max_n_cols=3):
         return max_n_cols
     return min(visualizer.elbow_value_, max_n_cols)
 
-def pdf_to_cols(data_path, model=None, max_n_cols=3, cols_list=[2,1]):
+def pdf_to_cols(data_path, model=None, max_n_cols=3, cols_list=[2,1], device='cpu'):
     pdfs = resolve_data_path(data_path)
     cols_dict = {}
     for file in pdfs:
         if Path(file).suffix == '.pdf':
             try:
                 if model is not None:
-                    cols_list = pred_cols(file, model)
+                    cols_list = pred_cols(file, model, device=device)
                 with pdfplumber.open(file) as pdf:
                     pdf_pages = pdf.pages
                     cols_list = cols_list + [None]*(len(pdf_pages)-len(cols_list))
@@ -90,8 +90,8 @@ def pdf_to_cols(data_path, model=None, max_n_cols=3, cols_list=[2,1]):
 def pdf_cols_to_text(pdf_cols):
     return flatten_list([dict_values(d) for d in dict_values(pdf_cols)])
 
-def pdf_to_text(data_path, model=None, max_n_cols=3, cols_list=[2,1]):
-    pdf_cols = pdf_to_cols(data_path, model=model, max_n_cols=max_n_cols, cols_list=cols_list)
+def pdf_to_text(data_path, model=None, max_n_cols=3, cols_list=[2,1], device='cpu'):
+    pdf_cols = pdf_to_cols(data_path, model=model, max_n_cols=max_n_cols, cols_list=cols_list, device=device)
     return pdf_cols_to_text(pdf_cols)
 
 class HeadModel(nn.Module):
@@ -178,7 +178,7 @@ def create_model(num_classes=4, lin_ftrs=None, ps=0.5, concat_pool=True, bn_fina
                 trial_n_lin_ftrs=[256,512,1024])
         return nn.Sequential(body,head_layers)
     
-def load_cols_model(path, device='cuda'):
+def load_cols_model(path, device='cpu'):
     net = create_model( num_classes=3, lin_ftrs=[512,128,64], ps=0.5)
     checkpoint = torch.load(path, map_location=torch.device(device))
     net.load_state_dict(checkpoint, strict=True)
@@ -187,7 +187,7 @@ def load_cols_model(path, device='cuda'):
 def pdf_to_batch(pdf):
     return torch.stack([TF.to_tensor(img) for img in color_fill_pdf_text(pdf)])
 
-def pred_cols(pdf, model, classes=[1,2,3], device='cuda'):
+def pred_cols(pdf, model, classes=[1,2,3], device='cpu'):
     model = model.eval().to(device)
     batch = pdf_to_batch(pdf)
     batch = batch.to(device)
