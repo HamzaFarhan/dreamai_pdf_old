@@ -83,7 +83,8 @@ def pdf_to_cols(data_path, model=None, max_n_cols=3, cols_list=[2,1], device='cp
                             cols[k]+=v
                     cols = sort_dict(cols)
                     cols_dict[str(file)] = cols
-            except:
+            except Exception as e:
+                print(f'\nCould not extract columns from pdf: {str(file)}\n{e}')
                 continue
     return cols_dict
 
