@@ -88,10 +88,12 @@ def pdf_to_cols(data_path, model=None, max_n_cols=3, cols_list=[2,1], device='cp
     return cols_dict
 
 def pdf_cols_to_text(pdf_cols):
-    return flatten_list([dict_values(d) for d in dict_values(pdf_cols)])
+    return {k: flatten_list(dict_values(v)) for k,v in pdf_cols.items()}
+    # return flatten_list([dict_values(d) for d in dict_values(pdf_cols)])
 
 def pdf_to_text(data_path, model=None, max_n_cols=3, cols_list=[2,1], device='cpu'):
     pdf_cols = pdf_to_cols(data_path, model=model, max_n_cols=max_n_cols, cols_list=cols_list, device=device)
+    # return pdf_cols
     return pdf_cols_to_text(pdf_cols)
 
 class HeadModel(nn.Module):

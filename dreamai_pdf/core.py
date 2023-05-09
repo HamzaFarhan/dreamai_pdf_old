@@ -2,7 +2,7 @@
 
 # %% auto 0
 __all__ = ['load_pdf', 'pdf_img_to_np', 'cid_to_char', 'combine_lines', 'get_avg_gap', 'get_max_gap', 'combine_splits',
-           'split_words', 'process_text', 'color_fill_pdf_text']
+           'split_words', 'process_text', 'only_bnw', 'color_fill_pdf_text']
 
 # %% ../nbs/00_core.ipynb 3
 from .imports import *
@@ -85,6 +85,11 @@ def process_text(text):
     text = re.sub(r'● ', " ", text)
     return text
 
+def only_bnw(img, thresh=50):
+    black = np.all(img < thresh, axis=-1)
+    img[~black] = 255
+    return img
+
 def color_fill_pdf_text(pdf, height=512, color='black'):
     """
     Gets a pdf and returns a list of images with the text filled in with the specified color.
@@ -106,5 +111,5 @@ def color_fill_pdf_text(pdf, height=512, color='black'):
     
     pdf = load_pdf(pdf)
     color = tuple(color_to_rgb(color))
-    return [pdf_img_to_np(page.to_image(height=height).draw_rects(page.extract_words(x_tolerance=5),
-                                                                  fill=color, stroke=color)) for page in pdf.pages]
+    return [only_bnw(pdf_img_to_np(page.to_image(height=height).draw_rects(page.extract_words(x_tolerance=5),
+                                                                  fill=color, stroke=color))) for page in pdf.pages]
