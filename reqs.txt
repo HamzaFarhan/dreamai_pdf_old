@@ -1,9 +1,10 @@
-dreamai
-dreamai_dl
-pdfplumber
-flair
-txtai
-transformers
-setuptools
 yellowbrick
+dreamai
+pdfplumber
+setuptools
 scikit_learn
+transformers
+dreamai_dl
+txtai
+nltk
+flair
